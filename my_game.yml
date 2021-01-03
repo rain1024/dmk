@@ -1,0 +1,7 @@
+scores:
+  magic: 1286
+  gem: 38
+  cakes: 1797
+targets:
+  - type: welcome
+    character: Merlin
