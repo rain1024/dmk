@@ -7,4 +7,6 @@ targets:
     name: I Miss Minnie!, Pt. 8
   - type: welcome
     character: Minnie Mouse
-
+characters:
+  - name: Mickey
+    level: 8
