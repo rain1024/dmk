@@ -1,0 +1,19 @@
+{
+  "name": "dmk",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rain1024/dmk.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rain1024/dmk/issues"
+  },
+  "homepage": "https://github.com/rain1024/dmk#readme"
+}
