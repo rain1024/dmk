@@ -3,5 +3,10 @@ scores:
   gem: 38
   cakes: 1797
 targets:
+  - type: task
+    name: I Miss Minnie!, Pt. 8
   - type: welcome
-    character: Merlin
+    character: Minnie Mouse
+characters:
+  - name: Mickey
+    level: 8

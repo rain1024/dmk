@@ -15,28 +15,25 @@ class Game:
         game.gem = scores['gem']
         game.cakes = scores['cakes']
         game.targets = state['targets']
+        game.characters = state['characters']
         return game
 
     def show(self):
-        print(' ================')
-        print('|     STATUS     |')
-        print(' ================')
-        print('Gems:', self.gem)
-        print('Magic:', self.magic)
-        print('Cakes:', self.cakes)
+        print('+ STATUS:')
+        print(f'- Gems ({self.gem})')
+        print(f'- Magic ({self.magic})')
 
-        print('\n')
-        print(' ================')
-        print('|     TARGET     |')
-        print(' ================')
-        print(self.targets)
+        print('\n+ TARGETS')
+        for target in self.targets:
+            print('- ' + str(target))
+
+        print('\n+ CHARACTERS')
+        for character in self.characters:
+            print('- ' + str(character))
 
     def suggest(self):
         print('\n')
-        print(' ================')
-        print('|NEXT ACTIVITIES |')
-        print(' ================')
-        print("Next Activities")
+        print('+ NEXT ACTIVITIES')
 
     def play(self):
         while True:
