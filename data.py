@@ -1,4 +1,43 @@
 import yaml
+from peewee import *
+
+db = SqliteDatabase('database.sqlite')
+db = SqliteDatabase('database_example.sqlite')
+
+
+class BaseModel(Model):
+    class Meta:
+        database = db
+
+
+class Film(BaseModel):
+    name = TextField()
+
+
+class Character(BaseModel):
+    name = TextField()
+    film = ForeignKeyField(Film, backref='character')
+
+
+class Token(BaseModel):
+    name = TextField()
+
+
+class Activity(BaseModel):
+    name = TextField()
+
+
+class Building(BaseModel):
+    name = TextField()
+
+
+class ActivityToken(Model):
+    activity = ForeignKeyField(Activity, backref='activity_token')
+    token = ForeignKeyField(Token, backref='activity_token')
+
+    class Meta:
+        database = db
+        db_table = 'activity_token'
 
 
 class Game:
@@ -34,6 +73,15 @@ class Game:
     def suggest(self):
         print('\n')
         print('+ NEXT ACTIVITIES')
+        for target in self.targets:
+            if "character" in target:
+                character_name = target["character"]
+                character = self.get_character(character_name)
+                print(character.activies)
+
+    def get_character(self, character_name):
+        character = self.characters[character_name]
+        return character
 
     def play(self):
         while True:
@@ -41,8 +89,3 @@ class Game:
             print(command)
             if (command == 'quit' or command == 'q'):
                 break
-
-
-class Character:
-    def __init__(self, name):
-        pass
