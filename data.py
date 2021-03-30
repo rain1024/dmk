@@ -1,6 +1,17 @@
 import yaml
+from peewee import *
 
+db = SqliteDatabase('database.sqlite')
 
+class BaseModel(Model):
+    class Meta:
+        database = db
+
+class Character(BaseModel):
+    name = CharField()
+
+characters = Character.select()
+print(0)
 class Game:
     def __init__(self):
         self.magic = 0
@@ -34,6 +45,15 @@ class Game:
     def suggest(self):
         print('\n')
         print('+ NEXT ACTIVITIES')
+        for target in self.targets:
+            if "character" in target:
+                character_name = target["character"]
+                character = self.get_character(character_name)
+                print(character.activies)
+
+    def get_character(self, character_name):
+        character = self.characters[character_name]
+        return character
 
     def play(self):
         while True:

@@ -1,0 +1,26 @@
+Table character {
+  id int [pk, increment]
+  name text
+}
+
+Table token {
+  id int [pk, increment]
+  token_id int
+}
+
+Table character_level_token {
+  id int [pk, increment]
+  character_id int [ref: > character.id]
+  level int
+  token_id int [ref: > token.id]
+  amount int
+}
+
+Table character_level_up {
+  int int [pk, increment]
+  character_id int [ref: > character.id]
+  level int
+  time int
+  gem int
+  experience int
+}
