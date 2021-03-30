@@ -18,25 +18,19 @@ class Game:
         return game
 
     def show(self):
-        print(' ================')
-        print('|     STATUS     |')
-        print(' ================')
-        print('Gems:', self.gem)
-        print('Magic:', self.magic)
-        print('Cakes:', self.cakes)
+        LINE_TEXT = '=' * 20
+        print('+ STATUS:')
+        print(f'- Gems ({self.gem})')
+        print(f'- Magic ({self.magic})')
 
         print('\n')
-        print(' ================')
-        print('|     TARGET     |')
-        print(' ================')
-        print(self.targets)
+        print('+ TARGET')
+        for target in self.targets:
+            print('- ' + str(target))
 
     def suggest(self):
         print('\n')
-        print(' ================')
-        print('|NEXT ACTIVITIES |')
-        print(' ================')
-        print("Next Activities")
+        print('+ NEXT ACTIVITIES')
 
     def play(self):
         while True:
