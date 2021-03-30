@@ -5,7 +5,7 @@ Table character {
 
 Table token {
   id int [pk, increment]
-  token_id int
+  name text
 }
 
 Table character_level_token {
@@ -16,11 +16,58 @@ Table character_level_token {
   amount int
 }
 
-Table character_level_up {
-  int int [pk, increment]
+Table character_level_resource {
+  id int [pk, increment]
   character_id int [ref: > character.id]
   level int
   time int
   gem int
   experience int
+}
+
+Table activity {
+  id int [pk, increment]
+  name text
+}
+
+Table acitivity_character {
+  id int [pk, increment]
+  activity_id int  [ref: > activity.id]
+  character_id int [ref: > character.id]
+}
+
+Table activity_resource {
+  id int [pk, increment]
+  activity_id int [ref: > activity.id]
+  time int
+  gem int
+  experience int
+}
+
+Table activity_token {
+  id int [pk, increment]
+  activity_id int [ref: > activity.id]
+  token_id int [ref: > token.id]
+}
+
+Table building {
+  id int [pk, increment]
+  name text
+}
+
+Table activity_building {
+  id int [pk, increment]
+  building_id int [ref: > building.id]
+  activity_id int [ref: > activity.id]
+}
+
+Table film {
+  id int [pk, increment]
+  name text
+}
+
+Table film_character {
+  id int [pk, increment]
+  film_id int [ref: > film.id]
+  character_id int [ref: > character.id]
 }
