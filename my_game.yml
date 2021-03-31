@@ -10,3 +10,5 @@ targets:
 characters:
   - name: Mickey
     level: 8
+  - name: Pete
+    level: 4
