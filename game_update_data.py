@@ -53,15 +53,19 @@ def update_character(name):
     level_table = soup.select_one(".article-table")
 
     links = level_table.select("tr")[1].select("td a")[:3]
+
     def extract_level_requirements(level_table):
         rows = level_table.select("tr")[1:11]
+
         def extract_row(i, row):
             output = [_.text.strip() for _ in row.select("td")]
             output = output[1:-1]
-            output = [name, i+1] + output
+            output = [name, i + 1] + output
             return output
+
         output = [extract_row(i, _) for i, _ in enumerate(rows)]
         return output
+
     level_requirements = extract_level_requirements(level_table)
     items = [link.attrs['title'] for link in links]
     hrefs = [link.attrs['href'] for link in links]
@@ -71,29 +75,63 @@ def update_character(name):
         r = requests.get(link)
         content = r.text
         soup = BeautifulSoup(content, "html.parser")
+        item_name = soup.select_one("#firstHeading").text
         obtain_rows = soup.select("table.article-table tr")[1:]
+        obtain_data = []
         for row in obtain_rows:
-            table_data = row.select("td")
-            print(0)
             try:
-                if row.select("th")[0].text.split() == "Other Source":
+                row.select("th")[0]
+                if row.select("th")[0].text.strip() == "Other Source":
                     break
             except IndexError:
                 pass
+            row_data_items = row.select("td")
+            time = row_data_items[3].text.strip()
+            c1_name = row_data_items[0].select_one("a").attrs["title"]
+            c1_level = row_data_items[0].select_one("small").text.split(" ")[1]
+
+            try:
+                extra = row_data_items[1].select_one("small a").attrs["title"]
+            except AttributeError:
+                extra = ""
+            try:
+                c2_name = row_data_items[2].select_one("a").attrs["title"]
+                c2_level = row_data_items[2].select_one("small").text.split(" ")[1]
+            except AttributeError:
+                c2_name = ""
+                c2_level = ""
+
+            obtain_data.append({
+                "item_name": item_name,
+                "time": time,
+                "c1": c1_name,
+                "c1_level": c1_level,
+                "c2": c2_name,
+                "c2_level": c2_level,
+                "extra": extra
+            })
+            # print(0)
         rarity = soup.find(attrs={"data-source": "rarity"}).select_one(".pi-font a").text
         output = {
-            "rarity": rarity
+            "rarity": rarity,
+            "obtain": obtain_data
         }
         return output
 
-    items_rarity = [parse_item_page(href)["rarity"] for href in hrefs]
+    items_data = [parse_item_page(href) for href in hrefs]
+    items_rarity = [item["rarity"] for item in items_data]
+    items_obtain = [item["obtain"] for item in items_data]
+    items_obtain = [item for sub in items_obtain for item in sub]
+    items_obtain = [list(item.values()) for item in items_obtain]
 
     rows = [(name, item, rarity, f"Token {i + 1}") for i, (item, rarity) in enumerate(zip(items, items_rarity))]
     n_cols = 30
     n_rows = 30
     df = pd.DataFrame(data=np.empty((n_rows, n_cols), dtype=str), columns=range(n_cols))
-    df.iloc[1:4, :4] = rows
-    df.iloc[1:11, 6:6+7] = level_requirements
+    df.iloc[0:len(items_obtain), 0:7] = items_obtain
+    df.iloc[0:3, 8:8+4] = rows
+    df.iloc[0:10, 14:14+7] = level_requirements
+
     df.to_csv(f"data/{name_norm}.csv", index=False, header=False, sep=";")
     print(name)
 
@@ -105,5 +143,5 @@ if __name__ == '__main__':
     # data_file = f"data/{name}.json"
     # with open(data_file, 'w') as f:
     #     f.write(json.dumps(data))
-    name = 'Mike Wazowski'
+    name = 'Flynn'
     update_character(name)
