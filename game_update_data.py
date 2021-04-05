@@ -52,7 +52,7 @@ def update_character(name):
     soup = BeautifulSoup(content, "html.parser")
     level_table = soup.select_one(".article-table")
 
-    links = level_table.select("tr")[1].select("td a")[:3]
+    links = level_table.select("tr")[3].select("td a")[:3]
 
     def extract_level_requirements(level_table):
         rows = level_table.select("tr")[1:11]
@@ -143,5 +143,5 @@ if __name__ == '__main__':
     # data_file = f"data/{name}.json"
     # with open(data_file, 'w') as f:
     #     f.write(json.dumps(data))
-    name = 'Flynn'
+    name = 'Rapunzel'
     update_character(name)
