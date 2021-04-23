@@ -143,5 +143,5 @@ if __name__ == '__main__':
     # data_file = f"data/{name}.json"
     # with open(data_file, 'w') as f:
     #     f.write(json.dumps(data))
-    name = 'Rapunzel'
+    name = 'Mike Wazowski'
     update_character(name)
